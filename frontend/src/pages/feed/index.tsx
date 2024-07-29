@@ -5,10 +5,12 @@ function Feed() {
   const [isLive, setIsLive] = useState(true);
   const [armed, setArmed] = useState(false);
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
     const checkArmedStatus = async () => {
       try {
-        const response = await fetch("http://localhost:5001/get-armed", {
+        const response = await fetch(API_URL + "/get-armed", {
           method: "GET",
         });
 
@@ -26,7 +28,7 @@ function Feed() {
     };
     const checkStreamStatus = async () => {
       try {
-        const response = await fetch("http://localhost:5001/video_feed", {
+        const response = await fetch(API_URL + "/video_feed", {
           method: "HEAD",
         });
 
@@ -53,13 +55,13 @@ function Feed() {
       let res;
 
       if (checked) {
-        res = await fetch("http://localhost:5001/arm", {
+        res = await fetch(API_URL + "/arm", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ algorithm: "ml" }),
         });
       } else {
-        res = await fetch("http://localhost:5001/disarm", {
+        res = await fetch(API_URL + "/disarm", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ algorithm: "ml" }),
@@ -74,6 +76,7 @@ function Feed() {
       console.error("Failed to arm/disarm");
     }
   };
+
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">
@@ -90,7 +93,7 @@ function Feed() {
           <div className="relative pb-9/16 rounded-lg overflow-hidden">
             <img
               className="w-full h-full"
-              src="http://localhost:5001/video_feed"
+              src={API_URL + "/video_feed"}
               alt="Live Stream"
             />
           </div>
