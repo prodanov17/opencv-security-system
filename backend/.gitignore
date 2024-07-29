@@ -7,6 +7,9 @@ env/
 # Ignore environment variables file
 .env
 
+#ignore videos
+storage/videos
+
 # Ignore logs and database
 logs/
 *.log
