@@ -1,0 +1,27 @@
+{
+  "app": {
+    "url": "http://192.168.0.21:5001",
+    "port": "5001",
+    "name": "security-system",
+    "host": "0.0.0.0",
+    "version": "1.0.0",
+    "debug": "True"
+  },
+
+  "logging": {
+    "level": "debug"
+  },
+
+  "implementations": {
+    "notifications": {
+      "default": "DummyNotification",
+      "dummy": "DummyNotification",
+      "sms": "SmsToNotification"
+    },
+    "storage": {
+      "default": "LocalStorage",
+      "local": "LocalStorage",
+      "path": "/storage/videos"
+    }
+  }
+}

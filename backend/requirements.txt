@@ -1,0 +1,6 @@
+numpy
+Flask
+python-dotenv
+opencv-python
+ffmpeg-python
+sqlalchemy
