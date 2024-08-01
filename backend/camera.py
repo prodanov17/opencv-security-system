@@ -4,6 +4,7 @@ import datetime
 from detection.ml_detection import MLDetection
 from storage.local_storage import LocalStorage
 
+
 class Camera:
 
     def __init__(self, capture=0, storage_method=LocalStorage()):
@@ -54,7 +55,12 @@ class Camera:
                     print("Person motion detected at", formatted_now)
                     current_recording_name = f'{formatted_now}.mp4'
                     fourcc = cv.VideoWriter_fourcc(*'mp4v')  # or use 'XVID'
-                    self.out = cv.VideoWriter(current_recording_name, fourcc, 20.0, (frame.shape[1], frame.shape[0]))
+                    self.out = cv.VideoWriter(
+                        current_recording_name,
+                        fourcc,
+                        20.0,
+                        (frame.shape[1], frame.shape[0])
+                    )
 
                 # Write the frame into the file 'output.mp4'
                 self.out.write(frame)
@@ -75,13 +81,15 @@ class Camera:
             self.storage.handle_detection(current_recording_name)
             current_recording_name = None
 
+        self.cap.release()
+
 
 
     def gen_frames(self):
         while True:
             success, frame = self.cap.read()
             if not success:
-                self.cap = cv.VideoCapture(0)
+                self.cap = cv.VideoCapture(self.cap_source)
                 continue
             else:
                 ret, buffer = cv.imencode('.jpg', frame)
@@ -91,6 +99,7 @@ class Camera:
 
     def __del__(self):
         self.cap.release()
+        self.camera_thread = None
         if self.out is not None:
             self.out.release()
         cv.destroyAllWindows()

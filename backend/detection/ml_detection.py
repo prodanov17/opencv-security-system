@@ -6,7 +6,7 @@ class MLDetection(Detection):
     def __init__(self):
         self.net = cv.dnn.readNetFromCaffe('models/config.txt', 'models/mobilenet_iter_73000.caffemodel')
 
-    def detect(self,frame):
+    def detect(self, frame):
         blob = cv.dnn.blobFromImage(frame, 0.007843, (300, 300), 127.5)
         self.net.setInput(blob)
         detections = self.net.forward()

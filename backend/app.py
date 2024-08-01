@@ -2,6 +2,7 @@ from camera import Camera
 from datetime import datetime, timedelta
 from detection.ml_detection import MLDetection
 from detection.hog_detection import HogDetection
+from detection.mog_detection import MogDetection
 from flask_cors import CORS
 from flask import Flask, jsonify, request, send_from_directory, Response
 from notification.smsto_notification import SmsToNotification
@@ -27,6 +28,8 @@ def arm():
     if 'algorithm' in data:
         if data['algorithm'] == 'hog':
             algorithm = HogDetection()
+        elif data['algorithm'] == 'mog':
+            algorithm = MogDetection()
 
     camera.arm(algorithm)
     return jsonify(message="System armed."), 200

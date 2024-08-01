@@ -22,5 +22,8 @@ def resolve_notification(notification_name):
     elif notification_name == 'DummyNotification':
         from notification.dummy_notification import DummyNotification
         return DummyNotification()
+    elif notification_name == 'PushoverNotification':
+        from notification.pushover import PushoverNotification
+        return PushoverNotification()
     else:
         raise ValueError(f"Unknown notification method: {notification_name}")

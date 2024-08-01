@@ -23,7 +23,7 @@ class LocalStorage(Storage):
 
         shutil.move(output_path, new_path)
 
-        url = f"{URL}{filename}"
+        url = f"{URL}/{filename}"
         return url
 
     def load(self, start_date, end_date, extension=".mp4"):
