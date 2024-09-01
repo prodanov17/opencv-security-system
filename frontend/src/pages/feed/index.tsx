@@ -1,7 +1,9 @@
 import { SwitchDemo } from "@/ui/shad/Switch";
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 function Feed() {
+  const { id } = useParams();
   const [isLive, setIsLive] = useState(true);
   const [armed, setArmed] = useState(false);
   const [algorithm, setAlgorithm] = useState("ml");
@@ -11,25 +13,25 @@ function Feed() {
   useEffect(() => {
     const checkArmedStatus = async () => {
       try {
-        const response = await fetch(API_URL + "/get-armed", {
+        const response = await fetch(API_URL + `/cameras/${id}`, {
           method: "GET",
         });
 
         if (!response.ok) {
           setArmed(false);
         } else {
-          const armed = await response.json();
-          setArmed(armed.armed);
+          const cam = await response.json();
+          console.log(cam);
+          setAlgorithm(cam.algorithm);
+          setArmed(cam.armed);
         }
       } catch (error) {
-        setArmed(false);
-      } finally {
         setArmed(false);
       }
     };
     const checkStreamStatus = async () => {
       try {
-        const response = await fetch(API_URL + "/video_feed", {
+        const response = await fetch(API_URL + `/cameras/${id}/video_feed`, {
           method: "HEAD",
         });
 
@@ -55,13 +57,13 @@ function Feed() {
       let res;
 
       if (checked) {
-        res = await fetch(API_URL + "/arm", {
+        res = await fetch(API_URL + `/cameras/${id}/arm`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ algorithm: algorithm || "ml" }),
         });
       } else {
-        res = await fetch(API_URL + "/disarm", {
+        res = await fetch(API_URL + `/cameras/${id}/disarm`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
         });
@@ -98,7 +100,7 @@ function Feed() {
           <div className="relative pb-9/16 rounded-lg overflow-hidden">
             <img
               className="w-full h-full"
-              src={API_URL + "/video_feed"}
+              src={API_URL + `/cameras/${id}/video_feed`}
               alt="Live Stream"
             />
           </div>

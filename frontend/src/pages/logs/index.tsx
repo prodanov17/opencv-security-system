@@ -17,7 +17,7 @@ function Logs() {
 
   const fetchLogs = async (start, end) => {
     try {
-      const response = await fetch(`${API_URL}/get-logs?startDate=${formatDate(start)}&endDate=${formatDate(end)}`);
+      const response = await fetch(`${API_URL}/cameras/logs?startDate=${formatDate(start)}&endDate=${formatDate(end)}`);
       const data = await response.json();
       if (response.ok) {
         setLogs(data.logs);
@@ -64,8 +64,9 @@ function Logs() {
         {logs.map((log, index) => (
             <Log
               key={index}
+              name={log.camera.name}
               url={log.url}
-              date={log.date}
+              date={log.timestamp}
               onClick={() => {}}
             />
         ))}

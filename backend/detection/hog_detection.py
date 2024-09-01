@@ -18,3 +18,6 @@ class HogDetection(Detection):
         cv2.putText(frame, f'Total Persons : {person-1}', (40,70), cv2.FONT_HERSHEY_DUPLEX, 0.8, (255,0,0), 2)
 
         return frame, person > 0
+
+    def get_short_name(self):
+        return "hog"

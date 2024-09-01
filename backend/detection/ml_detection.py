@@ -27,3 +27,7 @@ class MLDetection(Detection):
                 person_detected = True
 
         return frame, person_detected
+
+    def get_short_name(self):
+        return "ml"
+

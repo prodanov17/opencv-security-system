@@ -6,14 +6,14 @@ import os
 from utils import load_config
 
 config = load_config("config.json")
-API_ENDPOINT = config["app"]["url"] + "/motion_detected"
+API_ENDPOINT = config["app"]["url"] + "/cameras"
 
 class Storage(ABC):
     @abstractmethod
     def save(self, path_to_file, output_path):
         pass
 
-    def handle_detection(self, path_to_file):
+    def handle_detection(self, path_to_file, camera_id):
         def action_thread(path_to_file):
             output_path = path_to_file.split(".mp4")[0] + "-out.mp4"
             ffmpeg.input(path_to_file).output(output_path, vf='scale=-1:720').run()
@@ -23,7 +23,7 @@ class Storage(ABC):
             data = {
                 "url": url,
             }
-            requests.post(API_ENDPOINT, json=data)
+            requests.post(API_ENDPOINT + f"/{camera_id}/motion", json=data)
 
         thread = threading.Thread(target=action_thread, args=(path_to_file,))
         thread.start()

@@ -6,7 +6,7 @@ from detection.detection import Detection
 class MogDetection(Detection):
     def __init__(self):
         self.fgbg = cv2.createBackgroundSubtractorMOG2(history=500, varThreshold=100, detectShadows=True)
-        self.motion_threshold = 30000
+        self.motion_threshold = 10000
 
     def detect(self, frame):
         person_detected = False
@@ -33,3 +33,7 @@ class MogDetection(Detection):
                     cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2) # Draw rectangle in green
 
         return frame, person_detected
+
+    def get_short_name(self):
+        return "mog"
+

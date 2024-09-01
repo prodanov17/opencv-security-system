@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-function Log({ onClick, url, date }) {
+function Log({ onClick, url, date, name }) {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
 
@@ -25,6 +25,7 @@ function Log({ onClick, url, date }) {
       <video ref={videoRef} src={url} style={{ display: "none" }}></video>
       <canvas ref={canvasRef} width="100" height="100"></canvas>
       <div className="">
+        <h4 className="font-light text-neutral-400 text-xs uppercase">{name}</h4>
         <h3 className="font-semibold">Motion Detected!</h3>
         <p>{new Date(date).toLocaleString()}</p>
       </div>
